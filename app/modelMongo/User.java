@@ -1,11 +1,12 @@
-package model;
+package modelMongo;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
 @Entity
 public class User {
+	
 @Id
-private String id;
+public String id;
 public String username;
 public String password;
 public String gender;

@@ -7,7 +7,7 @@ import org.mongodb.morphia.Morphia;
 
 import com.mongodb.MongoClient;
 
-import model.User;
+import modelMongo.User;
 /*
  * The mongodata store returns a datastore "h2o" in the localhost 27017
  */
@@ -24,7 +24,7 @@ public class MongodbConnection {
 		try {
 			 client= new MongoClient(this.ip,this.port);
 			 Morphia morphia = new Morphia();
-			 mongodatastore = morphia.createDatastore(client,"H2o");
+			 mongodatastore = morphia.createDatastore(client,"H2O");
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,4 +42,5 @@ public class MongodbConnection {
 		mongodatastore().save(user);
 		return user;
 	}
+	
 }
