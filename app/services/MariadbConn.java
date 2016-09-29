@@ -6,7 +6,6 @@ import javax.persistence.Query;
 
 import modelMaria.Users;
 import play.db.jpa.JPA;
-import play.db.jpa.Transactional;
 
 public class MariadbConn {
 	
