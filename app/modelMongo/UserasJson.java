@@ -2,7 +2,10 @@ package modelMongo;
 
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
-
+/*
+ * This is a Mongodb user enity which is represent the json string from the
+ * request object is turned into Java Object to Persist in Mongodb 
+ */
 @Entity
 public class UserasJson {
 @Id
