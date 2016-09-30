@@ -2,8 +2,22 @@
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-GET           /saveuser                    controllers.LoginPageController.InsertUserDetailsAndGetId(username:String,password:String,gender:String,age:Integer)
+GET     /saveuser                    controllers.LoginPageController.InsertUserDetailsAndGetId(username:String,password:String,gender:String,age:Integer)
 
 GET     /home                     controllers.Assets.at(path="/public", file="html/home.html")
 
+GET 	  /userlist		           controllers.LoginPageController.getUserList
+
+
 GET     /homepagescript           controllers.Assets.at(path="/public", file="javascripts/HomePageScript.js")
+
+
+POST    /saveuserasjson            controllers.LoginPageController.saveUserasJsonMongo
+
+GET     /signin                    controllers.Assets.at(path="/public",file="html/signin.html")
+
+# The mapping for signin javascript is the below url
+
+GET     /signinpagescript           controllers.Assets.at(path="/public", file="javascripts/signinpagescript.js")
+#The mapping for the signin validation is the below url
+POST    /signinvalidate              controllers.SigninPageController.signinvalidate

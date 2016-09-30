@@ -13,8 +13,8 @@ javaJdbc,
   javaJpa,
   javaJdbc,
   "org.mongodb.morphia" % "morphia" % "0.107",
-   "mysql" % "mysql-connector-java" % "5.1.21",
-   "org.hibernate" % "hibernate-entitymanager" % "5.1.0.Final" 
+  javaWs,javaJpa,"org.hibernate" % "hibernate-entitymanager" % "5.1.0.Final","org.mariadb.jdbc" % "mariadb-java-client" % "1.1.7",
+  "com.google.code.gson" % "gson" % "2.3.1"
 )
 
 /*The following keys lets the eclipse to understand that the following project is Java Flavour*/

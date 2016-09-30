@@ -1,15 +1,16 @@
-package model;
+package modelMongo;
+
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
 @Entity
-public class User {
+public class UserasJson {
 @Id
-private String id;
+public String id;
 public String username;
 public String password;
 public String gender;
-public int age;
+public String age;
 public String getId() {
 	return id;
 }
@@ -34,10 +35,10 @@ public String getGender() {
 public void setGender(String gender) {
 	this.gender = gender;
 }
-public int getAge() {
+public String getAge() {
 	return age;
 }
-public void setAge(int age) {
+public void setAge(String age) {
 	this.age = age;
 }
 
