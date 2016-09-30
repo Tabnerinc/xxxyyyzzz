@@ -1,6 +1,4 @@
 package controllers;
-import com.mongodb.util.JSON;
-
 import modelMaria.Users;
 import modelMongo.User;
 import play.db.jpa.JPA;
@@ -10,11 +8,11 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import services.MariadbConn;
 import services.MongodbConnection;
-public class LoginPageController extends Controller{
+public class SignuPageController extends Controller{
 /*
  * This method inserts the userdetails in the mongodb and returns the registered with
  */
-	MariadbConn service=new MariadbConn();
+	MariadbConn maria=new MariadbConn();
 	MongodbConnection mongo = new MongodbConnection("127.0.0.1", 27017);
 	@Transactional
 	public Result InsertUserDetailsAndGetId(String username,String password, String gender,Integer age){
@@ -31,7 +29,7 @@ public class LoginPageController extends Controller{
 	@Transactional(readOnly=true)
 	public Result getUserList()
 	{
-    	return ok(Json.toJson(service.getUserList()));
+    	return ok(Json.toJson(maria.getUserList()));
 	}
 	
 	/*
@@ -58,6 +56,7 @@ public class LoginPageController extends Controller{
 	    */
 	  String jsonstring =  request().body().asFormUrlEncoded().get("formdata")[0];
 	  mongo.saveUserasJson(jsonstring);
+	  maria.saveUserinMariaAsJson(jsonstring);
 	  System.out.println(jsonstring);
 	  //let us redirect the page to login after signup
 	  return redirect("/signin");

@@ -26,6 +26,9 @@ public Users(String id, String username, String password, String gender, int age
 	this.gender = gender;
 	this.age = age;
 }
+public Users(){
+	
+}
 public String getUsername() {
 	return username;
 }

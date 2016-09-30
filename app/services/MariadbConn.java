@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import com.google.gson.Gson;
+
 import modelMaria.Users;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -28,6 +30,15 @@ public class MariadbConn {
 
 		return (Users) userDbObject.getSingleResult();
 
+	}
+	
+	@Transactional 
+	public void saveUserinMariaAsJson(String jsonString){
+		System.out.println("reaching");
+		Gson jsonObject = new Gson();
+		Users users = jsonObject.fromJson(jsonString, Users.class);
+		JPA.em().persist(users);
+		System.out.println("====Maria persisted====="+users.getUsername());
 	}
 
 }
