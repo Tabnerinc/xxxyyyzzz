@@ -1,4 +1,8 @@
+/META-INF/
+/application.conf
 /controllers/
-/services/
+/logback.xml
 /modelMaria/
 /modelMongo/
+/routes
+/services/
