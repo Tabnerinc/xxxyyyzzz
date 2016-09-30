@@ -2,7 +2,11 @@ package modelMaria;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
+/*
+ * This is a Mariadb Entity where the entity id is setup by the same id as
+ * the Object id of the record in the Mongodb, so by the id of the record we 
+ * can pull the record from the Mongodb or viceversa 
+ */
 @Entity
 public class Users {
 	
