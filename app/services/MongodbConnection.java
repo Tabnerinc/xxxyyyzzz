@@ -60,11 +60,9 @@ public class MongodbConnection {
 	 * The findUserbyUsernameAndpassword is used to find the user details in mongodb 
 	 * using username and password. 
 	 */
-	public UserasJson findUserbyUsernameAndPassword(String username,String password){
+	public UserasJson findUserbyUsernameAndPassword(String username,String password) throws Exception{
 	System.out.println(username);
 	UserasJson users = mongodatastore().find(UserasJson.class).filter("username",username).filter("password", password).get();
-	System.out.println(users.getAge());
-
 	return users;	
 	}
 	

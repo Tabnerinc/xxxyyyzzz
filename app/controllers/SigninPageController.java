@@ -47,14 +47,20 @@ public class SigninPageController extends Controller{
 		
 		String username = user.getUsername();
 		String password = user.getPassword();
-		System.out.println("==========Mongo=============");
+  System.out.println("==========Mongo=============");
 		System.out.println(username+" "+password);
 		/*
 		 * the method user findUserByUserNameAndPassword is in the Mongodb Service, the 
 		 * Mongo service in the services package which return a UserasJson Object which 
 		 * consists of the user details retrieved from the mongodb 
 		 */
-		user = mongo.findUserbyUsernameAndPassword(username, password);
+		try {
+			user = mongo.findUserbyUsernameAndPassword(username, password);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		System.out.println("==========Maria=============");
 		
 		/*
@@ -63,8 +69,17 @@ public class SigninPageController extends Controller{
 		 * be returned which is represented by the Entity Object of Maria Users as "Users".
 		 * 
 		 */
-		Users users = maria.getUserInf(username, password);
-		System.out.println(users.getId());
+		Users users=null;
+		try {
+			users = maria.getUserInf(username, password);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(users==null||user==null){
+			return ok("error");
+		}
+		else
 		return ok("validated "+ user.getGender()+ user.getAge());
 	}
 }
