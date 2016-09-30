@@ -28,7 +28,7 @@ public class MongodbConnection {
 		try {
 			 client= new MongoClient(this.ip,this.port);
 			 Morphia morphia = new Morphia();
-			 mongodatastore = morphia.createDatastore(client,"H2O");
+			 mongodatastore = morphia.createDatastore(client,"H2o");
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -61,13 +61,9 @@ public class MongodbConnection {
 	public UserasJson findUserbyUsernameAndPassword(String username,String password){
 	System.out.println(username);
 	UserasJson users = mongodatastore().find(UserasJson.class).filter("username",username).filter("password", password).get();
-	
-	/*String user = users.get(0).getGender()+""+users.get(0).getAge();
-	System.out.println(user);
-	*/
-	
-	
-	return users;
+	System.out.println(users.getAge());
+
+	return users;	
 	}
 	
 }
