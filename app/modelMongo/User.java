@@ -1,7 +1,7 @@
 package modelMongo;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
-
+//This is a Mongo db User enity
 @Entity
 public class User {
 	
