@@ -62,5 +62,10 @@ public class MariadbConn {
 		users.setId(id);
 		JPA.em().persist(users);
 	}
-
+	
+	@Transactional
+	public void saveUserInMaria(Users mariauser) {
+		
+		JPA.em().persist(mariauser);
+	}
 }

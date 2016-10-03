@@ -2,32 +2,26 @@
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-#Map static resource  for the signup page
-GET        /signup                     controllers.Assets.at(path="/public", file="html/signup.html")
-
-#signupscript static resource route for the signupscript in the signup.html
-GET     /signupscript           controllers.Assets.at(path="/public", file="javascripts/signupscript.js")
-
-#Map for the signin html for the signin.html - different from react js signin page
-GET     /signin                    controllers.Assets.at(path="/public",file="html/signin.html")
-
 #The signin page script for the signin.html
 GET     /signinpagescript           controllers.Assets.at(path="/public", file="javascripts/signinpagescript.js")
 
 
 #this is signin page index.html [REACTjS] page
-#GET     /signin                     controllers.Assets.at(path="/public", file="html/index.html")
+GET     /signin                     controllers.Assets.at(path="/public", file="html/index.html")
 
+#this is signin page index.html [REACTjS] page
+GET     /signup                     controllers.Assets.at(path="/public", file="html/index.html")
 # The Mapping for the ReactJS Bundle javascript for index.html
 GET     /bundle           controllers.Assets.at(path="/public", file="javascripts/bundle.js")
 
-
-
+GET     /styles           controllers.Assets.at(path="/public",file="stylesheets/styles.css")
 #Map for the saveasjson button in signup.html from the ajax call saveMongo() method in signup.html
-POST    /saveuserasjson            controllers.SignupPageController.saveUserasJsoninMongoandMaria
+POST  /signupuser          controllers.SignupPageController.saveUserasJsoninMongoandMaria()
 
+#Map for the signin button in index.html 
+POST    /signinuser              controllers.SigninPageController.signinvalidate
 
-#Map for the signin button in signin.html 
-POST    /signinvalidate              controllers.SigninPageController.signinvalidate
+#This is mapping to home page which is redirected after the users successful login
+GET     /home                    controllers.Assets.at(path="/public", file="html/home.html")
 
 

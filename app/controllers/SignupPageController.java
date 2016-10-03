@@ -1,5 +1,7 @@
 package controllers;
-import modelMongo.UserasJson;
+import java.util.Map;
+import modelMaria.Users;
+import modelMongo.User;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -11,7 +13,7 @@ public class SignupPageController extends Controller{
  * Mariadb Connection and Mongodb Connection are defined in the Services Package
  */
 	MariadbConn maria=new MariadbConn();
-	MongodbConnection mongo = new MongodbConnection("127.0.0.1", 27017);
+	MongodbConnection mongo = new MongodbConnection("10.10.5.214",27289);
 
 	/*
 	 * Save the Json Data from the user signup form
@@ -26,16 +28,39 @@ public class SignupPageController extends Controller{
 	@Transactional
    public Result saveUserasJsoninMongoandMaria(){
 	   /*
-	    * The formdata is resolved into string from the request body , request is a implicit object
-	    * of play. as the request data is labeled with formdata in the ajax the data is resolved as 
-	    * formdata and the data string is only one and the formurlencoded will return map we are getting
-	    * the first element with the label "formdata"
+	    * The formdata is rcieved for the following data so we have to resolve the formdata map 
+	    * for the following fields
+	    *firstName:
+         lastName:
+		 emailId:
+		 password:
 	    */
-	  String jsonstring =  request().body().asFormUrlEncoded().get("formdata")[0];
-	 UserasJson user = mongo.saveUserasJson(jsonstring);
-	  maria.saveUserinMariaAsJson(jsonstring,user.getId());
-	  System.out.println(jsonstring);
+	    Map<String,String[]> formfields =  request().body().asFormUrlEncoded();
+	    /*
+	     * We have to write the validations for fileds if empty we donnot accept the record.
+	     */
+	    String firstname= formfields.get("firstName")[0];
+	    String lastname= formfields.get("lastName")[0];
+	    String username= formfields.get("emailId")[0];
+	    String password= formfields.get("password")[0];
+	    
+	    Users mariauser = new Users(firstname,lastname,username,password);
+	    User mongouser = new User(firstname,lastname,username,password);
+	    /*
+	     * We have to stop saving in both databases if saving in one database fails
+	     * -write code for that
+	     */
+	    if(!mongo.userAlreadyPresentInMongo(username)){
+	   String mongouserid = mongo.saveUserInMongo(mongouser);
+	   mariauser.setId(mongouserid);
+	   maria.saveUserInMaria(mariauser);
+	   
 	  //let us redirect the page to login after signup[this has a issue when signing in]
 	  return redirect("/signin");
+	    }
+	    else{
+	    	System.out.println("user already present");
+	    	return status(501);
+	    }
    }
 }

@@ -4,6 +4,9 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import com.google.gson.Gson;
 import com.mongodb.MongoClient;
+
+
+import modelMongo.User;
 import modelMongo.UserasJson;
 /*
  * The MongodbConnection is to provide connection service for the mongodb,
@@ -27,7 +30,7 @@ public class MongodbConnection {
 		try {
 			 client= new MongoClient(this.ip,this.port);
 			 Morphia morphia = new Morphia();
-			 mongodatastore = morphia.createDatastore(client,"H2O");
+			 mongodatastore = morphia.createDatastore(client,"h2otest");
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,4 +69,33 @@ public class MongodbConnection {
 	return users;	
 	}
 	
+	
+	/*
+	 * Save User model in mongo when the parameters we receive is not a json 
+	 * instead if we get paramters also return the object id of the saved object so we can link the 
+	 * monog document with the  maria record
+	 */
+	
+	public String saveUserInMongo(User user){
+		mongodatastore().save(user);
+		
+		return user.getId();
+	}
+	
+	public boolean userAlreadyPresentInMongo(String username){
+		User useralreadypresent = mongodatastore().find(User.class).filter("username",username).get();
+		if(useralreadypresent!=null){
+			return true;
+		}
+		else
+			return false;
+	}
+	/*
+	 * find user from mongo from the table other than json format
+	 */
+	public User findUserbyUsernameAndPasswordinUserCollection(String username,String password) throws Exception{
+		System.out.println(username);
+		User users = mongodatastore().find(User.class).filter("username",username).filter("password", password).get();
+		return users;	
+		}
 }

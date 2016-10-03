@@ -13,6 +13,8 @@ public class Users {
 @Id
 public String id;
 public String username;
+public String firstname;
+public String lastname;
 public String password;
 public String gender;
 public int age;
@@ -22,6 +24,19 @@ public String getId() {
 public void setId(String id) {
 	this.id = id;
 }
+
+public String getFirstname() {
+	return firstname;
+}
+public void setFirstname(String firstname) {
+	this.firstname = firstname;
+}
+public String getLastname() {
+	return lastname;
+}
+public void setLastname(String lastname) {
+	this.lastname = lastname;
+}
 public Users(String id, String username, String password, String gender, int age) {
 	super();
 	this.id = id;
@@ -29,6 +44,13 @@ public Users(String id, String username, String password, String gender, int age
 	this.password = password;
 	this.gender = gender;
 	this.age = age;
+}
+
+public Users(String firstname,String lastname,String username,String password){
+	this.firstname=firstname;
+	this.lastname=lastname;
+	this.username= username;
+	this.password= password;
 }
 public Users(){
 	
