@@ -1,0 +1,36 @@
+body {
+  background-image: url("/app/images/background.jpg");
+  background-repeat: no-repeat;
+  background-size: 1517px 700px; }
+
+form {
+  margin: 0 auto;
+  width: 300px; }
+
+button {
+  margin: 0 auto; }
+
+.nav-tabs.nav-justified {
+  width: 50%;
+  text-align: center;
+  margin: 0 auto; }
+
+.navbar-brand {
+  padding: 2px 2px; }
+
+#contentExploreTab {
+  background-color: #ffae80;
+  color: white; }
+
+#contentMy360Tab {
+  background-color: white;
+  color: red; }
+
+.navbarColor {
+  background-color: lightskyblue; }
+
+#size {
+  font-size: medium;
+  color: white; }
+
+/*# sourceMappingURL=styles.css.map*/

@@ -32,10 +32,12 @@ public class MariadbConn {
 	 * The query is used in Named query which is protected against SQL injection 
 	 * The first parameter being the username and the second paramaeter is password
 	 * 
+	 * we are throwing Exception to handle it in the signin controller, if the mariadb 
+	 * returns an exception so if the user is not found and a exception is
+	 * 
 	 */
-
 	@Transactional
-	public Users getUserInf(String username, String password) {
+	public Users getUserInf(String username, String password) throws Exception {
 
 		final String usernamequery = "SELECT u FROM Users u WHERE u.username =?1 AND u.password =?2";
 
@@ -59,7 +61,11 @@ public class MariadbConn {
 		Users users = jsonObject.fromJson(jsonString, Users.class);
 		users.setId(id);
 		JPA.em().persist(users);
-		System.out.println("====Maria persisted====="+users.getUsername());
 	}
-
+	
+	@Transactional
+	public void saveUserInMaria(Users mariauser) {
+		
+		JPA.em().persist(mariauser);
+	}
 }
