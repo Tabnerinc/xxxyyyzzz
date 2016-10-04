@@ -1,11 +1,12 @@
-package services;
+package utils;
 import java.net.UnknownHostException;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import com.google.gson.Gson;
+import com.mongodb.DB;
 import com.mongodb.MongoClient;
 
-
+import modelMongo.PatientInfo;
 import modelMongo.User;
 import modelMongo.UserasJson;
 /*
@@ -29,8 +30,14 @@ public class MongodbConnection {
 		Datastore   mongodatastore=null;
 		try {
 			 client= new MongoClient(this.ip,this.port);
+			 DB db = client.getDB("H2O");
+			 boolean auth = db.authenticate("h2oadmin","Rag3N3r".toCharArray());
+			 System.out.println(auth);
+			 //breaks here
+			 db.getCollection("PatientInfo").find();
 			 Morphia morphia = new Morphia();
-			 mongodatastore = morphia.createDatastore(client,"h2otest");
+			 mongodatastore = morphia.createDatastore(client,"H2O");
+			
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,10 +83,10 @@ public class MongodbConnection {
 	 * monog document with the  maria record
 	 */
 	
-	public String saveUserInMongo(User user){
+	public String saveUserInMongo(PatientInfo user){
 		mongodatastore().save(user);
 		
-		return user.getId();
+		return user.getAcId();
 	}
 	
 	public boolean userAlreadyPresentInMongo(String username){

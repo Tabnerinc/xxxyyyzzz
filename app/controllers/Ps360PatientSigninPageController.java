@@ -5,16 +5,19 @@ import java.util.Map;
 import java.util.Set;
 
 import com.google.gson.Gson;
+import com.google.inject.Inject;
 
+import modelMaria.Patient;
 import modelMaria.Users;
 import modelMongo.User;
+import play.Configuration;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
-import services.MariadbConn;
-import services.MongodbConnection;
+import utils.MariadbConn;
+import utils.MongodbConnection;
 
-public class SigninPageController extends Controller{
+public class Ps360PatientSigninPageController extends Controller{
 	
 	/*
 	 * Mongodb connection and Mariadb connection Both the connections are written
@@ -31,9 +34,13 @@ public class SigninPageController extends Controller{
 	 *  request object body is reading the form url encode, which is encoded with a json string in the ajax 
 	 *  call - the json string is labeled with formdata
 	 */
-	
+	@Inject
+	private Configuration configuration;
 	@Transactional
 	public Result signinvalidate(){
+		//console out
+		
+		System.out.println(configuration.getString("db.default.password"));
 		Map<String, String[]> formdata = request().body().asFormUrlEncoded();
 		Set<String> keys= formdata.keySet();
 		Iterator<String> it = keys.iterator();
@@ -45,8 +52,6 @@ public class SigninPageController extends Controller{
 	
 	@Transactional
 	public Result finduser(String username,String password){
-		//Gson is the google library for making a json string into a Java class
-		Gson gson = new Gson();
 		/*
 		 *  So the String sigininform data which is recieved from the http request
 		 *  is turned into UserasJson Object which is a entity representer of the 
@@ -58,24 +63,6 @@ public class SigninPageController extends Controller{
 		 *  Entity Object- The Age and Gender will be null here 
 		 */
 		
-		
-  System.out.println("==========Mongo=============");
-		System.out.println(username+" "+password);
-		/*
-		 * the method user findUserByUserNameAndPassword is in the Mongodb Service, the 
-		 * Mongo service in the services package which return a UserasJson Object which 
-		 * consists of the user details retrieved from the mongodb 
-		 * 
-		 * The findUserByUserNameAndPassword will throw a exception
-		 */
-		User	user =null;
-		try {
-		user= mongo.findUserbyUsernameAndPasswordinUserCollection(username, password);
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
 		System.out.println("==========Maria=============");
 		
 		/*
@@ -84,15 +71,16 @@ public class SigninPageController extends Controller{
 		 * be returned which is represented by the Entity Object of Maria Users as "Users".
 		 * 
 		 */
-		Users users=null;
+		Patient users=null;
 		try {
 			users = maria.getUserInf(username, password);
+			System.out.println(username+password);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(users==null||user==null){
-			return ok("error");
+		if(users==null){
+			return redirect("/signin");
 		}
 		else
 		return redirect("/home");

@@ -11,17 +11,21 @@ GET     /signin                     controllers.Assets.at(path="/public", file="
 
 #this is signin page index.html [REACTjS] page
 GET     /signup                     controllers.Assets.at(path="/public", file="html/index.html")
+
 # The Mapping for the ReactJS Bundle javascript for index.html
 GET     /bundle           controllers.Assets.at(path="/public", file="javascripts/bundle.js")
 
 GET     /styles           controllers.Assets.at(path="/public",file="stylesheets/styles.css")
 #Map for the saveasjson button in signup.html from the ajax call saveMongo() method in signup.html
-POST  /signupuser          controllers.SignupPageController.saveUserasJsoninMongoandMaria()
+POST  /signupuser          controllers.Ps360PatientSignupPageController.saveUserasJsoninMongoandMaria()
 
 #Map for the signin button in index.html 
-POST    /signinuser              controllers.SigninPageController.signinvalidate
+POST    /signinuser              controllers.Ps360PatientSigninPageController.signinvalidate
 
 #This is mapping to home page which is redirected after the users successful login
 GET     /home                    controllers.Assets.at(path="/public", file="html/home.html")
 
 
+
+#The Mapping for testing mongodb for saving directly in the mongodb without entity
+#POST     /signupuser             controllers.SignUpTestWithMongodbWithouMorphia.saveUserInMongo

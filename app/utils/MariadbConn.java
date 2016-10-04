@@ -1,4 +1,4 @@
-package services;
+package utils;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import javax.persistence.Query;
 
 import com.google.gson.Gson;
 
+import modelMaria.Patient;
 import modelMaria.Users;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -20,7 +21,7 @@ import play.db.jpa.Transactional;
 public class MariadbConn {
 
 	@SuppressWarnings("unchecked")
-	public List<Users> getUserList() {
+	public List<Patient> getUserList() {
 
 		Query query = JPA.em().createQuery("select u from Users u", Users.class);
 		return query.getResultList();
@@ -37,15 +38,15 @@ public class MariadbConn {
 	 * 
 	 */
 	@Transactional
-	public Users getUserInf(String username, String password) throws Exception {
+	public Patient getUserInf(String emailId, String password) throws Exception {
 
-		final String usernamequery = "SELECT u FROM Users u WHERE u.username =?1 AND u.password =?2";
+		final String usernamequery = "SELECT u FROM Patient u WHERE u.emailId =?1 AND u.password =?2";
 
 		Query userDbObject = JPA.em().createQuery(usernamequery);
-		userDbObject.setParameter(1, username);
+		userDbObject.setParameter(1, emailId);
 		userDbObject.setParameter(2, password);
 
-		return (Users) userDbObject.getSingleResult();
+		return (Patient) userDbObject.getSingleResult();
 
 	}
 	
@@ -55,17 +56,23 @@ public class MariadbConn {
 	 * from the Mongodb
 	 */
 	@Transactional 
-	public void saveUserinMariaAsJson(String jsonString,String id){
+	public void saveUserinMariaAsJson(String jsonString,int id){
 		System.out.println("reaching");
 		Gson jsonObject = new Gson();
-		Users users = jsonObject.fromJson(jsonString, Users.class);
-		users.setId(id);
-		JPA.em().persist(users);
+		Patient patient = jsonObject.fromJson(jsonString, Patient.class);
+		patient.setAcId(id);
+		JPA.em().persist(patient);
 	}
 	
 	@Transactional
-	public void saveUserInMaria(Users mariauser) {
-		
+	public boolean saveUserInMaria(Patient mariauser) {
+		boolean saved = true;
+		try{
 		JPA.em().persist(mariauser);
+		}catch(Exception e){
+			saved = false;
+			e.printStackTrace();
+		}
+		return saved;
 	}
 }
