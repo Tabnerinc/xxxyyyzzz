@@ -1,10 +1,15 @@
 package services;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
+
 import com.google.gson.Gson;
 import com.mongodb.MongoClient;
-
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 
 import modelMongo.User;
 import modelMongo.UserasJson;
@@ -28,9 +33,16 @@ public class MongodbConnection {
 		MongoClient client;
 		Datastore   mongodatastore=null;
 		try {
+			ServerAddress addr = new ServerAddress("10.10.5.214",27289);
+			List<MongoCredential> credentialsList = new ArrayList<MongoCredential>();
+		    MongoCredential credentia = MongoCredential.createMongoCRCredential(
+		        "h2oadmin", "h2o", "Rag3N3r".toCharArray());
+		    credentialsList.add(credentia);
+			
 			 client= new MongoClient(this.ip,this.port);
 			 Morphia morphia = new Morphia();
-			 mongodatastore = morphia.createDatastore(client,"h2otest");
+			 mongodatastore = morphia.createDatastore(client,"h2o");
+			 
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,5 +1,6 @@
 package modelMaria;
 
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -9,7 +10,7 @@ import javax.persistence.Id;
  * can pull the record from the Mongodb or viceversa 
  */
 @Entity
-public class Users {
+public class Asdfasdfasdfafasfd {
 
 	@Id
 	public String id;
@@ -44,7 +45,7 @@ public class Users {
 		this.lastname = lastname;
 	}
 
-	public Users(String id, String username, String password, String gender, int age) {
+	public Asdfasdfasdfafasfd(String id, String username, String password, String gender, int age) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -53,14 +54,14 @@ public class Users {
 		this.age = age;
 	}
 
-	public Users(String firstname, String lastname, String username, String password) {
+	public Asdfasdfasdfafasfd(String firstname, String lastname, String username, String password) {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
 		this.password = password;
 	}
 
-	public Users() {
+	public Asdfasdfasdfafasfd() {
 
 	}
 
